@@ -1,2 +1,2 @@
 def solution(start_num, end_num):
-    return [num for num in range(end_num,start_num+1)][::-1]
+    return [num for num in range(start_num,end_num-1,-1)]
