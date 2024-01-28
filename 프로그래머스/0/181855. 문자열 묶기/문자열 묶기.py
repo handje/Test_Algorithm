@@ -1,5 +1,4 @@
 def solution(strArr):
-    answer = 0
     strArr=list(map(len,strArr))
     strLen={}
     for arr in strArr:
