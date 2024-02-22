@@ -3,7 +3,8 @@
 ## Selection Sort(선택 정렬)
 
 > 제일 작은 데이터를 앞으로
-> [사진]
+![1](https://github.com/handje/Test_Algorithm/assets/57988006/6a84a98b-6512-4287-b0a8-750a60617d81)
+
 
 1. i=0
 2. i=1 to n-1 중에 최솟값 찾기
@@ -15,7 +16,8 @@
 ## Insertion Sort(삽입 정렬)
 
 > 데이터를 비교해서 적절한 위치에 넣기
-> [사진]
+![2](https://github.com/handje/Test_Algorithm/assets/57988006/a2abfbd4-bba9-4296-a427-7adf188e1fad)
+
 
 1. 2번째부터 시작
 2. 자신보다 작은 데이터를 만날때까지 index-1
@@ -25,7 +27,8 @@
 ## Quick Sort(퀵 정렬)
 
 > 기준데이터(pivot)를 정하고 큰 수와 작은 수를 교환하여 리스트를 쪼개면서 정렬
-> [사진]
+![3](https://github.com/handje/Test_Algorithm/assets/57988006/66917f9b-f858-4955-91b9-0c075adcc1e7)
+
 
 (Hoare Partition)
 
@@ -41,7 +44,9 @@
 ## Count Sort(개수 정렬)
 
 > 데이터 크기 범위가 제한되어 정수로 표현 가능할때만 사용 가능한 정렬방법(약 1,000,000이하, 동일한 데이터가 많은 성적 관련 데이터정렬에 유리)
-> [사진]
+![4](https://github.com/handje/Test_Algorithm/assets/57988006/c89d9e45-177d-478b-a8a4-c15546c986fb)
+
+
 
 1. 배열의 최댓값+1 크기의 배열을 0으로 초기화
 2. 배열값을 인덱스로 하는 값증가
