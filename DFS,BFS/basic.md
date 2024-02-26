@@ -25,6 +25,18 @@
 [사진]
 1->2->7->6->8->3->4->5 순으로 탐색
 
+```py
+def dfs(graph,v,visited):
+   visited[v]=True #v=현재노드
+
+   for i in graph[v]: #노드와 연결된 노드 탐색
+      if not visited[i]:
+         dfs(graph,i,visited)
+
+visited=[False]*n
+dfs(graph,0,visited)
+```
+
 ## BFS(Breadth-First Search)\_너비우선탐색
 
 > queue를 이용한 탐색 알고리즘, 가까운 노드를 탐색
@@ -36,3 +48,21 @@
 
 [사진]
 1->2->3->8->7->4->5->6 순으로 탐색
+
+```py
+from collection import deque
+
+def bfs(graph,start,visited):
+   queue=deque([start])
+   visited[start]=True
+
+   while queue: #큐가 빌 때까지
+      v=queue.popleft()
+      for i in graph[v]:
+         if not visited[i]:
+            queue.append(i)
+            visted[i]=True
+
+   visited=[False]*n
+   bfs(graph,0,visited)
+```
