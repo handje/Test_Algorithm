@@ -18,6 +18,7 @@
 2. 스택의 초상단 노드에 방문하지 않은 인접 노드가 있으면 그 인접 노드를 스택에 넣고 방문 처리
 3. 2번 과정을 더 이상 수행할 수 없을 떄까지 반복
    => O(N)
+
 ![5](https://github.com/handje/Test_Algorithm/assets/57988006/1939e3a9-444f-450c-9b18-fe2a71cd4629)
 ![4](https://github.com/handje/Test_Algorithm/assets/57988006/681ce8d8-9ff3-478c-8c69-53b712039664)
 
@@ -43,6 +44,7 @@ dfs(graph,0,visited)
 2. 큐에서 노드를 꺼내 해당 노드 중에서 방문하지 않은 노드를 모두 큐에 넣고 방문 처리
 3. 더이상 수행할 수 없을 때까지 반복
    => O(N)
+
 ![6](https://github.com/handje/Test_Algorithm/assets/57988006/90429e0e-b861-41a5-9e38-369fdf9b00d7)![7](https://github.com/handje/Test_Algorithm/assets/57988006/cca775ee-461e-4104-8e27-7ae9379dead3)
 
 1->2->3->8->7->4->5->6 순으로 탐색
