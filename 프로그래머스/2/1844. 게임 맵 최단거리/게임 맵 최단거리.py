@@ -27,14 +27,11 @@ def solution(maps):
                 if maps[nx][ny]==0 or maps[nx][ny]>1:
                     continue
 
-                if maps[nx][ny]==1 or maps[nx][ny]>=(maps[x][y]+1):
+                if maps[nx][ny]==1 :
                     maps[nx][ny]=maps[x][y]+1
-
                     if nx==n-1 and ny==m-1:
                         return maps[n-1][m-1]
-
                     queue.append((nx,ny))
-
         return -1
 
     return bfs(0,0)
