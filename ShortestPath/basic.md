@@ -55,7 +55,7 @@
         else:
             #도달할 수 있는 경우[
 
-#2.힙 : O(ElogV) , E는 간선의 수
+#2.힙 : O(ElogV) , E는 간선의 수 =>힙(heap)은 튜플의 첫번째 요소가 우선순위를 결정
     import heapq
     #... visited배열은 x
     def dijkstra(start):
