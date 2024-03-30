@@ -1,14 +1,10 @@
 def solution(code):
     mode=0
-    ret=''
-    
-    for idx in range(0,len(code)):
-        if(code[idx]=="1"):
-            mode=int(not bool(mode))
+    ret=""
+    for i in range(len(code)):
+        if code[i]=="1":
+            mode=1-mode
             continue
-        if(mode==0):
-            if(idx%2==0): ret+=code[idx]
-        else:
-            if(idx%2==1): ret+=code[idx]
-
-    return ret if(len(ret)) else "EMPTY"
+        if i%2==mode:
+            ret+=code[i]
+    return ret if len(ret)>0 else "EMPTY"
