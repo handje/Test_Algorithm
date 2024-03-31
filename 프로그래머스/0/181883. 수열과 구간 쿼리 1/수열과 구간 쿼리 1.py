@@ -1,4 +1,5 @@
-def solution(arr, queries):   
+def solution(arr, queries):
     for s,e in queries:
-        arr=arr[:s]+list(map(lambda x:x+1,arr[s:e+1]))+arr[e+1:]
+        for i in range(s,e+1):
+            arr[i]+=1
     return arr
