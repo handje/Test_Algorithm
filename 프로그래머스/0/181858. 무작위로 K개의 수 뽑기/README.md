@@ -1,10 +1,10 @@
 # [level 0] 무작위로 K개의 수 뽑기 - 181858 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181858#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181858) 
 
 ### 성능 요약
 
-메모리: 10.9 MB, 시간: 2212.97 ms
+메모리: 11.1 MB, 시간: 2366.60 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 1월 0일 16:51:3
+2024년 04월 03일 21:08:04
 
 ### 문제 설명
 
