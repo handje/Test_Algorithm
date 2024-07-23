@@ -1,29 +1,18 @@
 function solution(participant, completion) {
-//     participant.sort();
-//     completion.sort();
+    const checkMap=new Map();
     
-//     for(let i=0;i<completion.length;i++){
-//         if(participant[i]!==completion[i]){
-//             return participant[i]
-//         }
-//     }
-//     return participant[participant.length-1]
-    
-    const result=new Map();
-    
-    for(let i=0;i<participant.length;i++){
-        const p=participant[i];
-        result.set(p,(result.get(p)||0)+1);
-        
-        if(i<=completion.length){
-            const c=completion[i];
-            result.set(c,(result.get(c)||0)-1);
+    for(let com of completion){
+        if(checkMap.has(com)){
+            checkMap.set(com,checkMap.get(com)+1)
+        }else{
+            checkMap.set(com,1)
         }
     }
-    for(let [key,value] of result){
-        if(value>0){
-            return key
+    
+    for(let par of participant){
+        if(!checkMap.has(par)||checkMap.get(par)===0){
+            return par
         }
+        checkMap.set(par,checkMap.get(par)-1)
     }
-    return -1
 }
