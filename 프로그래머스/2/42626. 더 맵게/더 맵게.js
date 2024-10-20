@@ -1,4 +1,3 @@
-// 해당 문제는 Heap 구조를 활용해야 함
 class MinHeap {
   constructor() {
     this.heap = [];
@@ -7,69 +6,78 @@ class MinHeap {
   size() {
     return this.heap.length;
   }
-      
-    // 값을 넣되, 오름차 순 정렬함
-  push(value) {
+
+  swap(idx1, idx2) {
+    [this.heap[idx1], this.heap[idx2]] = [this.heap[idx2], this.heap[idx1]];
+  }
+  add(value) {
     this.heap.push(value);
-    let currentIndex = this.heap.length - 1;
+    this.bubbleUp();
+  }
+
+  bubbleUp() {
+    let currIdx = this.heap.length - 1;
+    let parentIdx = Math.floor((currIdx - 1) / 2);
+    while (this.heap[parentIdx] && this.heap[parentIdx] > this.heap[currIdx]) {
+      this.swap(parentIdx, currIdx);
+      currIdx = parentIdx;
+      parentIdx = Math.floor((currIdx - 1) / 2);
+    }
+  }
+
+  remove() {
+    if (this.heap.length === 1) {
+      return this.heap.pop();
+    }
+    const value = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.bubbleDown();
+    return value;
+  }
+
+  bubbleDown() {
+    let currIdx = 0;
+    let lIdx = currIdx * 2 + 1;
+    let rIdx = currIdx * 2 + 2;
 
     while (
-      currentIndex > 0 &&
-      this.heap[currentIndex] < this.heap[Math.floor((currentIndex - 1) / 2)]
+      (this.heap[lIdx] && this.heap[lIdx] < this.heap[currIdx]) ||
+      (this.heap[rIdx] && this.heap[rIdx] < this.heap[currIdx])
     ) {
-      const temp = this.heap[currentIndex];
-      this.heap[currentIndex] = this.heap[Math.floor((currentIndex - 1) / 2)];
-      this.heap[Math.floor((currentIndex - 1) / 2)] = temp;
-      currentIndex = Math.floor((currentIndex - 1) / 2);
-    }
-  }
-
-    // 값을 빼되, 오름차 순 정렬 함
-  pop() {
-    if (this.heap.length === 0) return null;
-    if (this.heap.length === 1) return this.heap.pop();
-
-    const minValue = this.heap[0];
-    this.heap[0] = this.heap.pop();
-    let currentIndex = 0;
-
-    while (currentIndex * 2 + 1 < this.heap.length) {
-      let minChildIndex = currentIndex * 2 + 2 < this.heap.length && this.heap[currentIndex * 2 + 2] < this.heap[currentIndex * 2 + 1] ? currentIndex * 2 + 2 : currentIndex * 2 + 1;
-
-      if (this.heap[currentIndex] < this.heap[minChildIndex]) {
-        break;
+      let smallerIdx = lIdx;
+      if (this.heap[rIdx] && this.heap[rIdx] < this.heap[smallerIdx]) {
+        smallerIdx = rIdx;
       }
-
-      const temp = this.heap[currentIndex];
-      this.heap[currentIndex] = this.heap[minChildIndex];
-      this.heap[minChildIndex] = temp;
-      currentIndex = minChildIndex;
+      this.swap(currIdx, smallerIdx);
+      currIdx = smallerIdx;
+      lIdx = currIdx * 2 + 1;
+      rIdx = currIdx * 2 + 2;
     }
-
-    return minValue;
-  }
-
-  peek() {
-    return this.heap[0];
   }
 }
 
 function solution(scoville, K) {
-  const minHeap = new MinHeap();
+  let answer = 0;
+  const heap = new MinHeap();
 
-  for (const sco of scoville) {
-    minHeap.push(sco);
+  for (let s of scoville) {
+    heap.add(s);
   }
 
-  let mixedCount = 0;
-
-  while (minHeap.size() >= 2 && minHeap.peek() < K) {
-    const first = minHeap.pop();
-    const second = minHeap.pop();
-    const mixedScov = first + second * 2;
-    minHeap.push(mixedScov);
-    mixedCount++;
+  while (heap.size() >= 2) {
+    const first = heap.remove();
+    if (first >= K) {
+      return answer;
+    }
+    const second = heap.remove();
+    const mixed = first + second * 2;
+    heap.add(mixed);
+    answer++;
   }
 
-  return minHeap.peek() >= K ? mixedCount : -1;
+  if (heap.remove() >= K) {
+    return answer;
+  } else {
+    return -1;
+  }
 }
