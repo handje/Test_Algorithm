@@ -1,16 +1,8 @@
 function solution(nums) {
-    // const newNum=[...new Set(nums)];
-    
-//     if(newNum.length<=nums.length/2){
-//         return newNum.length;
-//     }else{
-//         return nums.length/2;
-//     }
-    const newNum=new Set(nums);
-    
-    if(newNum.size<=nums.length/2){
-        return newNum.size;
-    }else{
-        return nums.length/2;
-    }
+  const set = new Set(nums);
+  if (nums.length / 2 < set.size) {
+    return nums.length / 2;
+  } else {
+    return set.size;
+  }
 }
