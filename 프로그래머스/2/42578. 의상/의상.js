@@ -1,17 +1,17 @@
 function solution(clothes) {
-    let answer = 1;
-    const category=new Map();
-    clothes.forEach(([name,cate])=>{
-        if(category.has(cate)){
-            category.set(cate,category.get(cate)+1)
-        }else{
-            category.set(cate,1)
-        }
-    })
-
-    for(let num of category.values()){
-        answer*=(num+1)
+  const map = new Map();
+  for (let [name, cate] of clothes) {
+    if (map.has(cate)) {
+      map.set(cate, [...map.get(cate), name]);
+    } else {
+      map.set(cate, [name]);
     }
-    return answer-1;
-}
+  }
 
+  let count = 1;
+  for (let value of map.values()) {
+    count *= value.length + 1;
+  }
+
+  return count - 1;
+}
