@@ -1,28 +1,18 @@
 function solution(priorities, location) {
-    const answer = [];
-    const queue=[];
-    for(let i=0;i<priorities.length;i++){
-        queue.push([i,priorities[i]])
-    }
-    while(queue.length>0){
-        const first=queue.shift();
-        const len=queue.length;
-        for(let p of queue){
-            if(first[1]<p[1]){
-                queue.push(first);
-                break;
-            }
-        }
-        
-        if(len===queue.length){
-            answer.push(first)
-        }
-        
+    const prior=[];
+    const answer=[];
+    for(let i=0; i<priorities.length;i++){
+        prior.push([i,priorities[i]])
     }
 
-    for(let i=0;i<answer.length;i++){
-        if(answer[i][0]===location){
-            return i+1
+    while(prior.length>0){
+        let [idx,p]=prior.shift();
+        let maxNum=Math.max(...prior.map((v)=>v[1]));
+        if(p>=maxNum){
+            answer.push(idx)
+        }else{
+            prior.push([idx,p])
         }
     }
+    return answer.findIndex((e)=>e===location)+1
 }
