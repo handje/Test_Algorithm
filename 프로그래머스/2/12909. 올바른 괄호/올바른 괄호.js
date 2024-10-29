@@ -1,19 +1,14 @@
 function solution(s){
-    var answer = true;
-    const correct=new Map()
-    correct.set(")","(")
-    const stack=[];
-    for(let i=0;i<s.length;i++){
-        if(correct.has(s[i])){
-            if(!stack.pop()){
-                return false;
-            }    
+   const temp=[];
+    for(let i of s){
+        if(i==="("){
+            temp.push(1)
         }else{
-            stack.push(s[i])
+            if(temp.length===0){
+                return false
+            }
+            temp.pop();
         }
     }
-    if(stack.length>0){
-        return false;
-    }
-    return true;
+    return temp.length>0?false:true;
 }
