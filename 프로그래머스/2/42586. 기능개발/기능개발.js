@@ -1,24 +1,25 @@
 function solution(progresses, speeds) {
-    var answer = [];
-
-    while(speeds.length > 0) {
-        // 개발
-        for(let i in speeds) {
-            if(progresses[i] < 100) {
-                progresses[i] += speeds[i];
-            }
+    const remains=[];
+    for(let i=0;i<progresses.length;i++){
+        const time=Math.ceil((100-progresses[i])/speeds[i]);
+        remains.push(time)
+    }
+    console.log(remains)
+    let count=1;
+    const answer=[];
+    let maxDay=remains[0]
+    for(let i=1;i<remains.length;i++){
+        if(maxDay>=remains[i]){
+            count+=1;
+        }else{
+            answer.push(count);
+            count=1;
+            maxDay=remains[i]
         }
-        // 배포
-        let deploy_count = 0;
-        while(progresses[0] >= 100) {
-            progresses.shift();
-            speeds.shift();
-            deploy_count++;
-        }
-        if(deploy_count > 0) {
-            answer.push(deploy_count);
+        if(i===remains.length-1){
+            answer.push(count)
         }
     }
 
-    return answer;
+    return answer
 }
