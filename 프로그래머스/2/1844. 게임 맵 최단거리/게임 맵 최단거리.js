@@ -1,37 +1,31 @@
 function solution(maps) {
-  const xd = [-1, 0, 1, 0];
-  const yd = [0, 1, 0, -1];
   const n = maps.length;
   const m = maps[0].length;
-  const distance = Array(n)
-    .fill()
-    .map((e) => Array(m).fill(0));
-    
-    const queue = [[0, 0]];
-    distance[0][0]=1;
-    
+
+  const queue = [[0, 0]];
+
+  const dx = [1, 0, -1, 0];
+  const dy = [0, 1, 0, -1];
 
   while (queue.length > 0) {
     const [x, y] = queue.shift();
-    for (let i = 0; i < 4; i++) {
-      const currX = x + xd[i];
-      const currY = y + yd[i];
-      if (currX < 0 || currX >= n || currY < 0 || currY >= m) {
-        continue;
-      }
+    let acc = maps[x][y];
 
-      if (distance[currX][currY] > 1 ) {
+    for (let i = 0; i < 4; i++) {
+      const cx = x + dx[i];
+      const cy = y + dy[i];
+      if (cx < 0 || cx >= n) {
         continue;
       }
-      if (maps[currX][currY] === 1) {
-        distance[currX][currY] = distance[x][y] + 1;
-        if (currX === n - 1 && currY === m - 1) {
-          return distance[n - 1][m - 1];
-        }
-        queue.push([currX, currY]);
+      if (cy < 0 || cy >= m) {
+        continue;
       }
+      if (maps[cx][cy] === 0 || maps[cx][cy] > 1) {
+        continue;
+      }
+      queue.push([cx, cy]);
+      maps[cx][cy] = acc + 1;
     }
   }
-
-  return -1;
+  return maps[n - 1][m - 1] > 1 ? maps[n - 1][m - 1] : -1;
 }
