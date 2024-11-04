@@ -1,24 +1,27 @@
 function solution(tickets) {
-    var answer = [];
-    const visited=new Set();
-    
-    const dfs=(route)=>{
-        if(route.length===tickets.length+1){
-             answer.push(route);
-        }
-        for(let i in tickets){
-            if(visited.has(i)){
-                continue;
-            }
-            const [dep,arr]=tickets[i];
-            if(route[route.length-1]===dep){
-                visited.add(i)
-                dfs([...route,arr])
-                visited.delete(i)
-            }
-        }
-        
+  tickets.sort(); // 티켓을 사전순으로 정렬하여 탐색 시 우선순위를 유지
+  const route = [];
+
+  function dfs(current) {
+    if (route.length === tickets.length) {
+      route.push(current);
+      return true;
     }
-    dfs(["ICN"]);
-    return answer.sort()[0];
+
+    for (let i = 0; i < tickets.length; i++) {
+      if (!tickets[i].used && tickets[i][0] === current) {
+        tickets[i].used = true;
+        route.push(current);
+        
+        if (dfs(tickets[i][1])) return true;
+
+        route.pop();
+        tickets[i].used = false;
+      }
+    }
+    return false;
+  }
+
+  dfs("ICN");
+  return route;
 }
