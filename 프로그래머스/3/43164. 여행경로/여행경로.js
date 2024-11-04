@@ -1,27 +1,28 @@
-function solution(tickets) {
-  tickets.sort(); // 티켓을 사전순으로 정렬하여 탐색 시 우선순위를 유지
-  const route = [];
+var solution = function (tickets) {
+  const graph = new Map();
 
-  function dfs(current) {
-    if (route.length === tickets.length) {
-      route.push(current);
-      return true;
+  // 그래프 생성
+  for (const [src, dst] of tickets) {
+    if (!graph.has(src)) graph.set(src, []);
+    graph.get(src).push(dst);
+  }
+  console.log(graph);
+  // 목적지 리스트 정렬
+  for (const [key, value] of graph) {
+    value.sort().reverse(); // 역순 정렬하여 pop() 사용 가능
+  }
+  console.log(graph);
+
+  const itinerary = [];
+
+  function dfs(airport) {
+    while (graph.has(airport) && graph.get(airport).length > 0) {
+      dfs(graph.get(airport).pop());
     }
-
-    for (let i = 0; i < tickets.length; i++) {
-      if (!tickets[i].used && tickets[i][0] === current) {
-        tickets[i].used = true;
-        route.push(current);
-        
-        if (dfs(tickets[i][1])) return true;
-
-        route.pop();
-        tickets[i].used = false;
-      }
-    }
-    return false;
+    itinerary.push(airport);
   }
 
   dfs("ICN");
-  return route;
-}
+
+  return itinerary.reverse();
+};
