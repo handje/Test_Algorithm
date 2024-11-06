@@ -1,8 +1,3 @@
-//한번에 하나만
-//평균시간을 줄이기
-
-//작업중에 들어온것은 걸리는 시간을 우선순위로
-
 class MinHeap {
   constructor() {
     this.heap = [];
@@ -10,27 +5,28 @@ class MinHeap {
   size() {
     return this.heap.length;
   }
+  peek() {
+    return this.heap[0];
+  }
   swap(a, b) {
     [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
   }
-  getMinOrMax() {
-    return this.heap[0];
-  }
-  add(value) {
-    this.heap.push(value);
+  push(v) {
+    this.heap.push(v);
     this.bubbleUp();
   }
   bubbleUp() {
-    let curr = this.heap.length - 1;
-    let parent = Math.floor((curr - 1) / 2);
-    while (this.heap[parent] && this.heap[parent] > this.heap[curr]) {
-      this.swap(curr, parent);
-      curr = parent;
-      parent = Math.floor((curr - 1) / 2);
+    let currIdx = this.heap.length - 1;
+    let parIdx = Math.floor((currIdx - 1) / 2);
+
+    while (this.heap[parIdx] && this.heap[currIdx] < this.heap[parIdx]) {
+      this.swap(currIdx, parIdx);
+      currIdx = parIdx;
+      parIdx = Math.floor((currIdx - 1) / 2);
     }
   }
-  getNum() {
-    if (this.size() === 1) {
+  pop() {
+    if (this.heap.length === 1) {
       return this.heap.pop();
     }
     const value = this.heap[0];
@@ -38,94 +34,128 @@ class MinHeap {
     this.bubbleDown();
     return value;
   }
-  remove(value) {
-    const idx = this.heap.findIndex((el) => el === value);
-    const last = this.heap.pop();
-    if (last !== value) {
-      this.heap[idx] = last;
-      this.bubbleDown();
+  bubbleDown() {
+    let currIdx = 0;
+    let leftIdx = currIdx * 2 + 1;
+    let rightIdx = currIdx * 2 + 2;
+    const last = this.heap.length - 1;
+    while (
+      (this.heap[leftIdx] && this.heap[leftIdx] < this.heap[currIdx]) ||
+      (this.heap[rightIdx] && this.heap[rightIdx] < this.heap[currIdx])
+    ) {
+      let minIdx = leftIdx;
+      if (this.heap[rightIdx] && this.heap[rightIdx] < this.heap[leftIdx]) {
+        minIdx = rightIdx;
+      }
+      this.swap(currIdx, minIdx);
+      currIdx = minIdx;
+      leftIdx = currIdx * 2 + 1;
+      rightIdx = currIdx * 2 + 2;
     }
   }
-  bubbleDown() {
-    let curr = 0;
-    let left = curr * 2 + 1;
-    let right = curr * 2 + 2;
-
-    while (
-      (this.heap[left] && this.heap[left] < this.heap[curr]) ||
-      (this.heap[right] && this.heap[right] < this.heap[curr])
-    ) {
-      let smaller = left;
-      if (this.heap[right] && this.heap[right] < this.heap[smaller]) {
-        smaller = right;
-      }
-      this.swap(curr, smaller);
-      curr = smaller;
-      left = curr * 2 + 1;
-      right = curr * 2 + 2;
+  delete(v) {
+    const idx = this.heap.findIndex((e) => e === v);
+    if (idx === -1) return;
+    if (idx === this.heap.length - 1) {
+      return this.heap.pop();
     }
+    this.heap[idx] = this.heap.pop();
+    this.bubbleDown();
   }
 }
-class MaxHeap extends MinHeap {
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+  size() {
+    return this.heap.length;
+  }
+  peek() {
+    return this.heap[0];
+  }
+  swap(a, b) {
+    [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
+  }
+  push(v) {
+    this.heap.push(v);
+    this.bubbleUp();
+  }
   bubbleUp() {
-    let curr = this.heap.length - 1;
-    let parent = Math.floor((curr - 1) / 2);
-    while (this.heap[parent] && this.heap[parent] < this.heap[curr]) {
-      this.swap(curr, parent);
-      curr = parent;
-      parent = Math.floor((curr - 1) / 2);
+    let currIdx = this.heap.length - 1;
+    let parIdx = Math.floor((currIdx - 1) / 2);
+
+    while (this.heap[parIdx] && this.heap[currIdx] > this.heap[parIdx]) {
+      this.swap(currIdx, parIdx);
+      currIdx = parIdx;
+      parIdx = Math.floor((currIdx - 1) / 2);
     }
   }
-  bubbleDown() {
-    let curr = 0;
-    let left = curr * 2 + 1;
-    let right = curr * 2 + 2;
-
-    while (
-      (this.heap[left] && this.heap[left] > this.heap[curr]) ||
-      (this.heap[right] && this.heap[right] > this.heap[curr])
-    ) {
-      let bigger = left;
-      if (this.heap[right] && this.heap[right] > this.heap[bigger]) {
-        bigger = right;
-      }
-      this.swap(curr, bigger);
-      curr = bigger;
-      left = curr * 2 + 1;
-      right = curr * 2 + 2;
+  pop() {
+    if (this.heap.length === 1) {
+      return this.heap.pop();
     }
+    const value = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.bubbleDown();
+    return value;
+  }
+  bubbleDown() {
+    let currIdx = 0;
+    let leftIdx = currIdx * 2 + 1;
+    let rightIdx = currIdx * 2 + 2;
+    const last = this.heap.length - 1;
+    while (
+      (this.heap[leftIdx] && this.heap[leftIdx] > this.heap[currIdx]) ||
+      (this.heap[rightIdx] && this.heap[rightIdx] > this.heap[currIdx])
+    ) {
+      let maxIdx = leftIdx;
+      if (this.heap[rightIdx] && this.heap[rightIdx] > this.heap[leftIdx]) {
+        maxIdx = rightIdx;
+      }
+      this.swap(currIdx, maxIdx);
+      currIdx = maxIdx;
+      leftIdx = currIdx * 2 + 1;
+      rightIdx = currIdx * 2 + 2;
+    }
+  }
+  delete(v) {
+    const idx = this.heap.findIndex((e) => e === v);
+    if (idx === -1) return;
+    if (idx === this.heap.length - 1) {
+      return this.heap.pop();
+    }
+    this.heap[idx] = this.heap.pop();
+    this.bubbleDown();
   }
 }
 
 function solution(operations) {
-  let answer = [];
   const minHeap = new MinHeap();
   const maxHeap = new MaxHeap();
 
-  for (let o of operations) {
-    const [op, n] = o.split(" ");
-    if (op === "I") {
-      const num = Number(n);
-      minHeap.add(num);
-      maxHeap.add(num);
-    } else if (op === "D") {
+  for (let op of operations) {
+    const temp = op.split(" ");
+    const num = parseInt(temp[1]);
+    if (temp[0] === "I") {
+      minHeap.push(num);
+      maxHeap.push(num);
+    } else {
       if (minHeap.size() === 0) {
         continue;
       }
-      if (n === "1") {
-        const maxNum = maxHeap.getNum();
-        minHeap.remove(maxNum);
-      } else if (n === "-1") {
-        const minNum = minHeap.getNum();
-        maxHeap.remove(minNum);
+      if (num === 1) {
+        const maxNum = maxHeap.pop();
+        minHeap.delete(maxNum);
+      } else {
+        const minNum = minHeap.pop();
+        maxHeap.delete(minNum);
       }
     }
   }
-    
-if(minHeap.size()===0){
-    return [0,0]
-}else{
-      return [maxHeap.getMinOrMax(), minHeap.getMinOrMax()];
+
+  return minHeap.size() === 0 ? [0, 0] : [maxHeap.pop(), minHeap.pop()];
 }
 
-}
+console.log(
+  solution(["I 16", "I -5643", "D -1", "D 1", "D 1", "I 123", "D -1"])
+);
