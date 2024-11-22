@@ -1,24 +1,30 @@
 function solution(n, lost, reserve) {
-  const clothes = Array(n).fill(1);
-  for (let i = 0; i < n; i++) {
-    if (lost.findIndex((e) => e === i + 1) !== -1) {
-      clothes[i]--;
+  lost.sort((a, b) => a - b);
+  reserve.sort((a, b) => a - b);
+
+  const remains = Array(n + 1).fill(1);
+  remains[0] = 0;
+
+  for (let i of reserve) {
+    remains[i]++;
+  }
+  for (let i of lost) {
+    remains[i]--;
+  }
+
+  for (let i of lost) {
+    if (remains[i] === 1) {
+      continue;
     }
-    if (reserve.findIndex((e) => e === i + 1) !== -1) {
-      clothes[i]++;
+
+    if (i > 1 && remains[i - 1] === 2) {
+      remains[i - 1] = 1;
+      remains[i]++;
+    } else if (i < n && remains[i + 1] === 2) {
+      remains[i + 1] = 1;
+      remains[i]++;
     }
   }
 
-  for (let i = 0; i < n; i++) {
-    if (clothes[i] === 0) {
-      if (i - 1 >= 0 && clothes[i - 1] === 2) {
-        clothes[i]++;
-        clothes[i - 1]--;
-      } else if (i + 1 < n && clothes[i + 1] === 2) {
-        clothes[i]++;
-        clothes[i + 1]--;
-      }
-    }
-  }
-  return clothes.filter((e) => e >= 1).length;
+  return remains.filter((e) => e !== 0).length;
 }
