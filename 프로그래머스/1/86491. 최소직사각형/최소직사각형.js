@@ -1,12 +1,11 @@
 function solution(sizes) {
-  sizes.map((size) => size.sort((a, b) => a - b));
-  let row = 0;
-  let col = 0;
-
-  for (let [x, y] of sizes) {
-    if (x > row) row = x;
-    if (y > col) col = y;
-  }
-
-  return row * col;
+    var answer = 0;
+    sizes.map((size)=>size.sort((a,b)=>a-b));
+    let x=0;
+    let y=0;
+    for(let [a,b] of sizes){
+        if(x<a)x=a;
+        if(y<b)y=b;
+    }
+    return x*y;
 }
