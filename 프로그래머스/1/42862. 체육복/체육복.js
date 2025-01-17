@@ -1,30 +1,30 @@
 function solution(n, lost, reserve) {
-  lost.sort((a, b) => a - b);
-  reserve.sort((a, b) => a - b);
-
-  const remains = Array(n + 1).fill(1);
-  remains[0] = 0;
-
-  for (let i of reserve) {
-    remains[i]++;
-  }
-  for (let i of lost) {
-    remains[i]--;
-  }
-
-  for (let i of lost) {
-    if (remains[i] === 1) {
-      continue;
+    var answer = 0;
+    const remains=Array(n+1).fill(1);
+    lost.sort((a,b)=>a-b);
+    reserve.sort((a,b)=>a-b)
+    remains[0]=0;
+    
+        for(let r of reserve){
+        remains[r]++
     }
-
-    if (i > 1 && remains[i - 1] === 2) {
-      remains[i - 1] = 1;
-      remains[i]++;
-    } else if (i < n && remains[i + 1] === 2) {
-      remains[i + 1] = 1;
-      remains[i]++;
+    
+    for(let l of lost){
+        remains[l]--;
     }
-  }
-
-  return remains.filter((e) => e !== 0).length;
+    
+    for(let i=1;i<n+1;i++){
+        if(remains[i]>0)continue;
+         if(i-1>0&&remains[i-1]===2){
+            remains[i]++;
+            remains[i-1]--;
+             continue
+        }
+        if(i+1<n+1&&remains[i+1]===2){
+            remains[i]++;
+            remains[i+1]--;
+            continue;
+        }
+    }
+    return remains.filter((a)=>a!==0).length;
 }
