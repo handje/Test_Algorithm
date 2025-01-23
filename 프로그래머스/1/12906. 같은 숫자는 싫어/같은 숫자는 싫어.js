@@ -1,11 +1,10 @@
 function solution(arr)
 {
-    const answer=[arr[0]];
-    for(let i=1;i<arr.length;i++){
-        if(answer[answer.length-1]===arr[i]){
-            continue;
-        }
-        answer.push(arr[i])
+    const answer=[];
+    
+    for(let a of arr){
+        if(answer[answer.length-1]===a)continue;
+        answer.push(a)
     }
     return answer
 }
