@@ -1,11 +1,15 @@
 function solution(sizes) {
-    var answer = 0;
-    sizes.map((size)=>size.sort((a,b)=>a-b));
-    let x=0;
-    let y=0;
-    for(let [a,b] of sizes){
-        if(x<a)x=a;
-        if(y<b)y=b;
+    for(let i=0;i<sizes.length;i++){
+        sizes[i].sort((a,b)=>a-b)
     }
-    return x*y;
+    
+    console.log(sizes)
+    let row=0;
+    let col=0;
+    
+    for(let i=0;i<sizes.length;i++){
+        if(row<sizes[i][0])row=sizes[i][0]
+        if(col<sizes[i][1])col=sizes[i][1]
+    }
+    return row*col
 }
