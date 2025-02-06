@@ -1,16 +1,14 @@
 function solution(numbers, target) {
-  let count = 0;
-  function dfs(acc, idx) {
-    if (idx === numbers.length) {
-      if (target === acc) {
-        count += 1;
-      }
-      return acc;
-    }
-    dfs(acc - numbers[idx], idx + 1);
-    dfs(acc + numbers[idx], idx + 1);
-  }
-  dfs(0, 0);
+    let answer = 0;
 
-  return count;
+    const dfs=(res,idx)=>{
+        if(idx===numbers.length){
+            if(res===target)answer++;
+            return;
+        }
+        dfs(res+numbers[idx],idx+1);
+        dfs(res-numbers[idx],idx+1);
+    }
+    dfs(0,0)
+    return answer;
 }
