@@ -54,24 +54,22 @@ class MinHeap {
     }
   }
 }
-
 function solution(scoville, K) {
-  const heap = new MinHeap();
-  for (const s of scoville) {
-    heap.push(s);
-  }
-  let count = 0;
-  while (heap.size() >= 2) {
-    if (heap.peek() >= K) return count;
-    const fst = heap.pop();
-    const sec = heap.pop();
-    heap.push(fst + sec * 2);
-    count++;
-  }
-  if (heap.peek() >= K) {
-    return count;
-  }
-  return -1;
-}
+    let answer = 0;
+    const heap=new MinHeap();
+    
+    for(let i=0;i<scoville.length;i++){
+        heap.push(scoville[i]);
+    }
 
-console.log(solution([1, 12, 3, 9, 2, 10], 7));
+    while(heap.size()>1){
+        const first=heap.pop();
+        if(first>=K)break;
+        const second=heap.pop();
+        heap.push(first+second*2);
+        answer++
+        
+    }
+    if(heap.pop()<K)return -1
+    return answer;
+}
