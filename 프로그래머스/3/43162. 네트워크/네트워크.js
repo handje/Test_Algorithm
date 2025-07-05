@@ -1,28 +1,36 @@
 function solution(n, computers) {
-  const visited = new Set();
-  let networkCount = 0;
+  let net = 0;
+  const map = new Map();
 
-  function bfs(start) {
-    const queue = [start];
-    visited.add(start);
-
-    while (queue.length) {
-      const i = queue.shift();
-      for (let j = 0; j < n; j++) {
-        if (computers[i][j] === 1 && !visited.has(j)) {
-          visited.add(j);
-          queue.push(j);
-        }
+  for (let i = 0; i < computers.length; i++) {
+    const temp = [];
+    for (let j = 0; j < computers[i].length; j++) {
+      if (computers[i][j] === 1 && i !== j) {
+        temp.push(j);
       }
+      map.set(i, temp);
     }
   }
+
+  const bfs = (queue, visited) => {
+    while (queue.length > 0) {
+      const curr = queue.shift();
+      if (visited.has(curr)) continue;
+      visited.add(curr);
+
+      for (let next of [...map.get(curr)]) {
+        if (!visited.has(next)) queue.push(next);
+      }
+    }
+  };
+
+  const visited = new Set();
 
   for (let i = 0; i < n; i++) {
     if (!visited.has(i)) {
-      bfs(i);
-      networkCount++;
+      bfs([i], visited);
+      net++;
     }
   }
-
-  return networkCount;
+  return net;
 }
